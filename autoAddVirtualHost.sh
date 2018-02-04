@@ -94,7 +94,7 @@ restart() {
 }
 
 #############
-#    test
+# test
 #############
 
 echo "Creating Virtual Host"
@@ -106,7 +106,7 @@ echo ${NEED_RESTART}
 
 
 #############
-#script
+# script
 #############
 
 addVH
