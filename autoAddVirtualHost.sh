@@ -1,5 +1,22 @@
 #!/usr/bin/env bash
+
+addVH() {
+    PATH = $1
+    TEMPLATE    =   `cat template.host`
+
+}
+
+dellVH() {
+    PATH = "$1/www"
+
+
+}
+
 echo "Creating Virtual Host"
 PATH = $1
 cd PATH
-TEMPLATE    =   `cat template.host`
+
+
+
+addVH PATH
+dellVH PATH
