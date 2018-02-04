@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 #########################################################
 #
-#Script auto add Virtual host
-#Author:GRS gaevoyrs@gmail.com
+# Script auto add Virtual host
+# Author:GRS gaevoyrs@gmail.com
 #
 #########################################################
 
@@ -43,7 +43,7 @@ isSetAddVHItem() {
     return 0
 }
 
-#add virtual host
+# add virtual host
 addVH() {
     for ITEM in `ls ${PATH_WWW}` ; do
         if [ `isSetAddVHItem ${ITEM}` -eq 0 ]
@@ -74,7 +74,7 @@ isSetDellVHItem() {
     return 0
 }
 
-#dell virtual host
+# dell virtual host
 dellVH() {
     for ITEM in `ls ${PATH_APACHE}` ; do
         if [ `isSetDellVHItem ${ITEM}` -eq 0 ]
@@ -85,7 +85,7 @@ dellVH() {
 
 }
 
-#restart apache2
+# restart apache2
 restart() {
     if [ ${NEED_RESTART} -eq 0 ]
     then
