@@ -106,7 +106,7 @@ echo ${NEED_RESTART}
 
 
 #############
-#    script
+#script
 #############
 
 addVH
