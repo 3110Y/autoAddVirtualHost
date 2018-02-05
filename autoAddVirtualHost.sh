@@ -24,6 +24,7 @@ NEED_RESTART=0
 addVHItem() {
     ITEM=$1
     ITEM_APACHE="$PATH_APACHE/$ITEM.conf"
+    chmod 777 "$PATH_WWW/$ITEM"
     echo "Копирование из $PATH_TEMPLATE в $ITEM_APACHE"
     cp ${PATH_TEMPLATE} ${ITEM_APACHE}
     sed -i -e "s/ITEM_APACHE/$ITEM/g" ${ITEM_APACHE}
