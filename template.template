@@ -1,0 +1,21 @@
+<VirtualHost *:80>
+  ServerAdmin webmaster@localhost
+  ServerName ITEM_APACHE
+  DocumentRoot /var/php/www/ITEM_APACHE
+  <Directory />
+    Options Indexes FollowSymLinks
+    AllowOverride None
+    Require all granted
+  </Directory>
+  <Directory /var/php/www/ITEM_APACHE>
+    Options Indexes FollowSymLinks
+    AllowOverride None
+    Require all granted
+  </Directory>
+  ErrorLog /var/log/apache2/error.log
+  # Possible values include: debug, info, notice, warn, error, crit,
+  # alert, emerg.
+  LogLevel warn
+  CustomLog /var/log/apache2/access.log combined
+  ServerSignature On
+</VirtualHost>
