@@ -23,7 +23,7 @@ NEED_RESTART=0
 # add virtual host item
 addVHItem() {
     ITEM=$1
-    ITEM_APACHE="$PATH_APACHE/$ITEM"
+    ITEM_APACHE="$PATH_APACHE/$ITEM.conf"
     cp ${PATH_TEMPLATE} ${ITEM_APACHE}
     sed -i -e "s/ITEM_APACHE/$ITEM/g" ${ITEM_APACHE}
     chmod 777 ${ITEM_APACHE}
@@ -32,23 +32,11 @@ addVHItem() {
     NEED_RESTART=1
 }
 
-# is set virtual host item in apache
-isSetAddVHItem() {
-    if [ -e "$PATH_APACHE/$1" ]
-	then
-	    #Файл уже есть
-	    echo 1
-    fi
-    #Файла нет
-    echo 0
-}
-
 # add virtual host
 addVH() {
     cd ${PATH_WWW}
     for ITEM in `ls ${PATH_WWW}` ; do
-        IS_SET=`isSetAddVHItem "$ITEM"`
-        if [ "$IS_SET" -eq "0" ]
+        if [ ! -e "$PATH_APACHE/$ITEM" ]
         then
             addVHItem ${ITEM}
             echo ${ITEM}
@@ -66,22 +54,10 @@ dellVHItem() {
     NEED_RESTART=1
 }
 
-# is set virtual host item in www
-isSetDellVHItem() {
-    if [ -e "$PATH_WWW/$1" ]
-	then
-	    #Файл уже есть
-	    echo 1
-    fi
-    #Файла нет
-    echo 0
-}
-
 # dell virtual host
 dellVH() {
     for ITEM in `ls ${PATH_APACHE}` ; do
-        IS_SET=`isSetDellVHItem "$ITEM"`
-        if [ "$IS_SET" -eq "0" ]
+        if [ ! -e "$PATH_WWW/$ITEM"  ]
         then
             dellVHItem ${ITEM}
         fi
@@ -93,7 +69,7 @@ dellVH() {
 restart() {
     if [ ${NEED_RESTART} -eq 0 ]
     then
-        service apache2 restart
+        apache2ctl restart
     fi
 }
 
