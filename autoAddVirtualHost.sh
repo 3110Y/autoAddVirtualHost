@@ -24,10 +24,11 @@ NEED_RESTART=0
 addVHItem() {
     ITEM=$1
     ITEM_APACHE="$PATH_APACHE/$ITEM.conf"
+    echo "Копирование из $PATH_TEMPLATE в $ITEM_APACHE"
     cp ${PATH_TEMPLATE} ${ITEM_APACHE}
     sed -i -e "s/ITEM_APACHE/$ITEM/g" ${ITEM_APACHE}
     chmod 777 ${ITEM_APACHE}
-    a2ensite ${ITEM_APACHE}
+    a2ensite "$ITEM.conf"
     echo "127.0.0.1       $ITEM" >> ${PATH_HOSTS}
     NEED_RESTART=1
 }
@@ -69,7 +70,7 @@ dellVH() {
 restart() {
     if [ ${NEED_RESTART} -eq 0 ]
     then
-        apache2ctl restart
+        systemctl reload apache2
     fi
 }
 
@@ -90,6 +91,6 @@ echo ${NEED_RESTART}
 #############
 
 addVH
-dellVH
+#dellVH
 restart
 exit 0
