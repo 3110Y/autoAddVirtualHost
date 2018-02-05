@@ -24,8 +24,8 @@ NEED_RESTART=0
 addVHItem() {
     ITEM=$1
     ITEM_APACHE="$PATH_APACHE/$ITEM"
-    touch ${ITEM_APACHE}
-    cat ${PATH_TEMPLATE} | sed "s/ITEM_APACHE/$ITEM_APACHE/g" > ${ITEM_APACHE}
+    cp ${PATH_TEMPLATE} ${ITEM_APACHE}
+    sed -i -e "s/ITEM_APACHE/$ITEM_APACHE/g" ${ITEM_APACHE}
     chmod 777 ${ITEM_APACHE}
     a2ensite ${ITEM_APACHE}
     echo "127.0.0.1       $ITEM" >> ${PATH_HOSTS}
