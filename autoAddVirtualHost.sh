@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 #########################################################
 #
 # Script auto add Virtual host
@@ -9,9 +9,9 @@
 ##############
 # var
 ##############
-PATH=$1
+PATH_INIT=$1
 PATH_WWW="$1/www"
-PATH_TEMPLATE="$PATH/template.template"
+PATH_TEMPLATE="$PATH_INIT/template.template"
 PATH_APACHE="/etc/apache2/sites-available"
 PATH_HOSTS="/etc/hosts"
 NEED_RESTART=0
@@ -37,18 +37,21 @@ isSetAddVHItem() {
     if [ -e "$PATH_APACHE/$1" ]
 	then
 	    #Файл уже есть
-	    return 1
+	    echo 1
     fi
     #Файла нет
-    return 0
+    echo 0
 }
 
 # add virtual host
 addVH() {
+    cd ${PATH_WWW}
     for ITEM in `ls ${PATH_WWW}` ; do
-        if [ `isSetAddVHItem ${ITEM}` -eq 0 ]
+        IS_SET=`isSetAddVHItem "$ITEM"`
+        if [ "$IS_SET" -eq "0" ]
         then
             addVHItem ${ITEM}
+            echo ${ITEM}
         fi
     done
 
@@ -68,16 +71,17 @@ isSetDellVHItem() {
     if [ -e "$PATH_WWW/$1" ]
 	then
 	    #Файл уже есть
-	    return 1
+	    echo 1
     fi
     #Файла нет
-    return 0
+    echo 0
 }
 
 # dell virtual host
 dellVH() {
     for ITEM in `ls ${PATH_APACHE}` ; do
-        if [ `isSetDellVHItem ${ITEM}` -eq 0 ]
+        IS_SET=`isSetDellVHItem "$ITEM"`
+        if [ "$IS_SET" -eq "0" ]
         then
             dellVHItem ${ITEM}
         fi
