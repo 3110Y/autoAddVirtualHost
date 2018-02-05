@@ -37,7 +37,7 @@ addVHItem() {
 addVH() {
     cd ${PATH_WWW}
     for ITEM in `ls ${PATH_WWW}` ; do
-        if [ ! -e "$PATH_APACHE/$ITEM" ]
+        if [ ! -e "$PATH_APACHE/$ITEM.conf" ]
         then
             addVHItem ${ITEM}
             echo ${ITEM}
