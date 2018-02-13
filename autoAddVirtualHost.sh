@@ -50,8 +50,8 @@ addVH() {
 # dell virtual host item
 dellVHItem() {
     ITEM=$1
-    ITEM_APACHE="$PATH_APACHE/$ITEM"
-    a2dissite ${ITEM_APACHE}
+    ITEM_APACHE="$PATH_APACHE/$ITEM.conf"
+    a2dissite "$ITEM.conf"
     rm -f ${ITEM_APACHE}
     NEED_RESTART=1
 }
@@ -59,9 +59,10 @@ dellVHItem() {
 # dell virtual host
 dellVH() {
     for ITEM in `ls ${PATH_APACHE}` ; do
+        ITEM=`echo ${ITEM} | rev | cut -c 6- | rev`
         if [ ! -e "$PATH_WWW/$ITEM"  ]
         then
-            dellVHItem ${ITEM}
+           dellVHItem ${ITEM}
         fi
     done
 
@@ -69,7 +70,7 @@ dellVH() {
 
 # restart apache2
 restart() {
-    if [ ${NEED_RESTART} -eq 0 ]
+    if [ ${NEED_RESTART} -eq 1 ]
     then
         systemctl reload apache2
     fi
@@ -79,12 +80,12 @@ restart() {
 # test
 #############
 
-echo "Creating Virtual Host"
-echo ${PATH}
-echo ${PATH_WWW}
-echo ${PATH_TEMPLATE}
-echo ${PATH_APACHE}
-echo ${NEED_RESTART}
+#echo "Creating Virtual Host"
+#echo ${PATH}
+#echo ${PATH_WWW}
+#echo ${PATH_TEMPLATE}
+#echo ${PATH_APACHE}
+#echo ${NEED_RESTART}
 
 
 #############
@@ -92,6 +93,6 @@ echo ${NEED_RESTART}
 #############
 
 addVH
-#dellVH
+dellVH
 restart
 exit 0
